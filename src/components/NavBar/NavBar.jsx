@@ -1,10 +1,11 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import { ReactComponent as Logo } from "../../assets/svg/crown.svg";
+import { auth } from "../../firebase/firebase.utils";
 
 import "./NavBar.scss";
 
-const NavBar = () => {
+const NavBar = ({ currentUser }) => {
   return (
     <div className="navbar">
       <Link to="/" className="logo-container">
@@ -20,6 +21,20 @@ const NavBar = () => {
         <NavLink className="option" to="/contact">
           Contact
         </NavLink>
+        {currentUser ? (
+          <div
+            className="option"
+            onClick={() => {
+              auth.signOut();
+            }}
+          >
+            Sign Out
+          </div>
+        ) : (
+          <NavLink className="option" to="/signin">
+            Sign in
+          </NavLink>
+        )}
       </div>
     </div>
   );
